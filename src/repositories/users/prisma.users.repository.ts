@@ -15,15 +15,50 @@ export class PrismaUsersRepository implements UsersRepository {
     });
   }
   async createUser(user: User): Promise<User> {
-    // implementar
-    return true as unknown as User;
+    return this.prisma.users.create({
+      data: user,
+    });
+    /*if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)==null){
+      return this.prisma.users.create({
+        data: user,
+      })
+    }*/
   }
   async deleteUser(id: string): Promise<any> {
-    // implementar
-    return true;
+    if(id!=null){
+      return this.prisma.users.delete({
+        where: {
+          id: id,
+        },
+      });
+    }
   }
   async updateUser(user: User): Promise<User> {
-    // implementar
-    return true as unknown as User;
+    if(this.userExists(user.cpf_cnpj)!=null){
+    return this.prisma.users.update({
+      where: { id: user.id },
+      data: user,
+    });
+    }
+    /*if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)!=null){
+      return this.prisma.users.update({
+        where: { id: user.id },
+        data: user,
+      });
+    }*/
+  }
+  private async userExists(cpf_cnpj: string): Promise<User> {
+    return this.prisma.users.findFirst({
+      where: {
+        cpf_cnpj: cpf_cnpj,
+      },
+    });
+  }
+
+  private isUserNull(user: User){
+    if(user.cpf_cnpj == null || user.email == null || user.id == null || user.is_active == null || user.name == null || user.phone == null || user.role == null){
+      return true;
+    }
+    return false;
   }
 }
