@@ -3,8 +3,8 @@ import { Body, Delete, Patch } from '@nestjs/common/decorators';
 import { UsersRepository } from 'src/repositories/users/users.repository';
 import { User } from 'src/interfaces/users';
 
-@Controller('manager')
-export class ManagerController {
+@Controller('user')
+export class UserController {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   @Get(':email')

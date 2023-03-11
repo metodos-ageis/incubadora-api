@@ -15,14 +15,11 @@ export class PrismaUsersRepository implements UsersRepository {
     });
   }
   async createUser(user: User): Promise<User> {
-    return this.prisma.users.create({
-      data: user,
-    });
-    /*if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)==null){
+    if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)==null){
       return this.prisma.users.create({
         data: user,
       })
-    }*/
+    }
   }
   async deleteUser(id: string): Promise<any> {
     if(id!=null){
@@ -34,19 +31,14 @@ export class PrismaUsersRepository implements UsersRepository {
     }
   }
   async updateUser(user: User): Promise<User> {
-    if(this.userExists(user.cpf_cnpj)!=null){
-    return this.prisma.users.update({
-      where: { id: user.id },
-      data: user,
-    });
-    }
-    /*if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)!=null){
+    if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)!=null){
       return this.prisma.users.update({
         where: { id: user.id },
         data: user,
       });
-    }*/
+    }
   }
+
   private async userExists(cpf_cnpj: string): Promise<User> {
     return this.prisma.users.findFirst({
       where: {
@@ -56,7 +48,12 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   private isUserNull(user: User){
-    if(user.cpf_cnpj == null || user.email == null || user.id == null || user.is_active == null || user.name == null || user.phone == null || user.role == null){
+    if(typeof user.id === "string" && user.id.trim().length == 0 || 
+      typeof user.email === "string" && user.email.trim().length == 0 ||
+      typeof user.role === "string" && user.role.trim().length == 0 ||
+      typeof user.name === "string" && user.name.trim().length == 0 ||
+      typeof user.cpf_cnpj === "string" && user.cpf_cnpj.trim().length == 0 ||
+      typeof user.phone === "string" && user.phone.trim().length == 0){
       return true;
     }
     return false;

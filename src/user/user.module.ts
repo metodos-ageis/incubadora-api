@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma.service';
 import { PrismaUsersRepository } from 'src/repositories/users/prisma.users.repository';
 import { UsersRepository } from 'src/repositories/users/users.repository';
-import { ManagerController } from './manager.controller';
+import { UserController } from './user.controller';
 
 @Module({
-  controllers: [ManagerController],
+  controllers: [UserController],
   providers: [
     PrismaService,
     {
@@ -14,4 +14,4 @@ import { ManagerController } from './manager.controller';
     },
   ],
 })
-export class ManagerModule {}
+export class UserModule {}
