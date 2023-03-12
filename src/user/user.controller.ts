@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query } from '@nestjs/common';
 import { Body, Delete, Patch } from '@nestjs/common/decorators';
 import { UsersRepository } from 'src/repositories/users/users.repository';
 import { User } from 'src/interfaces/users';
@@ -7,9 +7,9 @@ import { User } from 'src/interfaces/users';
 export class UserController {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  @Get(':email')
-  async getUser(@Param('email') email: string): Promise<any> {
-    return this.usersRepository.getUser('gerente@gmail.com');
+  @Get()
+  async getUser(@Query() query: { email: string }): Promise<any> {
+    return this.usersRepository.getUser(query.email);
   }
 
   @Post()
@@ -22,8 +22,8 @@ export class UserController {
     return this.usersRepository.updateUser(user);
   }
 
-  @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<any>{
-    return this.usersRepository.deleteUser(id);
+  @Delete()
+  async deleteUser(@Query() query: { id: string }): Promise<any> {
+    return this.usersRepository.deleteUser(query.id);
   }
 }

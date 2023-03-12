@@ -8,11 +8,15 @@ export class PrismaUsersRepository implements UsersRepository {
   constructor(private prisma: PrismaService) {}
 
   async getUser(email: string): Promise<User> {
-    return this.prisma.users.findFirst({
-      where: {
-        email: email,
-      },
-    });
+    if(email != null)
+    {
+      return this.prisma.users.findFirst({
+        where: {
+          email: email,
+        },
+      });
+    }
+    
   }
   async createUser(user: User): Promise<User> {
     if(!this.isUserNull(user) && this.userExists(user.cpf_cnpj)==null){
