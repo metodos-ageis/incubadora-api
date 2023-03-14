@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { Body, Delete, Patch } from '@nestjs/common/decorators';
-import { UsersRepository } from 'src/repositories/users/users.repository';
 import { User } from 'src/interfaces/users';
+import { UsersRepository } from 'src/repositories/users/users.repository';
 
 @Controller('user')
 export class UserController {
@@ -9,21 +9,21 @@ export class UserController {
 
   @Get(':email')
   async getUser(@Param('email') email: string): Promise<any> {
-    return this.usersRepository.getUser('gerente@gmail.com');
+    return this.usersRepository.getUser(email);
   }
 
   @Post()
-  async createUser(@Body() user: User): Promise<any>{
+  async createUser(@Body() user: User): Promise<any> {
     return this.usersRepository.createUser(user);
   }
 
   @Patch()
-  async updateUser(@Body() user: User): Promise<any>{
+  async updateUser(@Body() user: User): Promise<any> {
     return this.usersRepository.updateUser(user);
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<any>{
+  async deleteUser(@Param('id') id: string): Promise<any> {
     return this.usersRepository.deleteUser(id);
   }
 }
