@@ -3,6 +3,14 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Enable CORS for all routes if in development mode
+  if (process.env.NODE_ENV === 'development') {
+    app.enableCors();
+  } else {
+    const clientUrl = process.env.CLIENT_URL;
+    app.enableCors({ origin: clientUrl });
+  }
   await app.listen(3000);
 }
 bootstrap();
