@@ -68,3 +68,71 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+------
+
+## API da Incubadora
+
+Segue abaixo descrições das funções e módulos do sistema disponibilizados pela API.
+
+## Rotas
+
+O link padrão é `localhost:3000/`. Variações para as rotas específicas seguem de acordo com a tabela abaixo.
+
+| Rota | Descrição |
+|---|---|
+| `/company` | Grupos, Organizações e Empresas registrados no sistema. |
+| `/user` | Usuários utilizando o sistema. |
+| `/auth` | Utilizado para a autenticação no sistema. Em construção. |
+
+## Métodos
+
+Em construção...
+
+## Respostas
+
+Em construção...
+
+## Parâmetros
+
+Estes são os parâmetros utilizados pela API para manuseio dos dados.
+
+- Company
+
+| Parâmetro | Tipo | Descrição |
+|---|---|---|
+| `id` | string | Código identificador da companhia no sistema. |
+| `title` | string | |
+| `description` | string | |
+| `sector` | string | |
+| `goal` | string | Resumo do objetivo do projeto. |
+| `cnpj` | number | Cadastro Nacional da Pessoa Jurídica. |
+| `project_time` | number | |
+| `challenges` | string | |
+| `team_size` | number | Número de integrantes na equipe do projeto. |
+| `project_started` | string | |
+| `website` | string | Página da web referente ao projeto. |
+| `ip` | boolean | |
+| `resources` | string | |
+| `resources_needed` | string | |
+| `mvp` | boolean | Informa se trata de um MVP ou um produto robusto. |
+| `incoming_model` | string | |
+| `created_at?` | Date | |
+| `updated_at?` | Date | |
+| `deleted_at?` | Date | |
+
+- User
+
+| Parâmetro | Tipo | Descrição |
+|---|---|---|
+| `id` | string | Código identificador do usuário no sistema. |
+| `email` | string | Endereço de e-mail do usuário cadastrado no sistema. |
+| `role` | string | |
+| `name` | string | Nome do usuário referente ao id. |
+| `cpf_cnpj` | string | |
+| `phone` | string | Número de telefone para contato. |
+| `is_active` | boolean | |
+
+## Ações
+
+Em construção...
