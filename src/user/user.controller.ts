@@ -4,6 +4,7 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Query,
 } from '@nestjs/common';
 import { Body, Delete, Param, Patch } from '@nestjs/common/decorators';
 import { User } from 'src/interfaces/users';
@@ -13,9 +14,9 @@ import { UsersRepository } from 'src/repositories/users/users.repository';
 export class UserController {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  @Get(':email')
-  async getUser(@Param('email') email: string): Promise<any> {
-    return this.usersRepository.getUser('gerente@gmail.com');
+  @Get()
+  async getUser(@Query() query: { email: string }): Promise<any> {
+    return this.usersRepository.getUser(query.email);
   }
 
   @Post()

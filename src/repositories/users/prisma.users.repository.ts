@@ -17,6 +17,7 @@ export class PrismaUsersRepository implements UsersRepository {
       });
     }
   }
+
   async createUser(user: User): Promise<User> {
     const userExists = await this.userExists(user.cpf_cnpj);
     if (!this.isUserNull(user) && !userExists) {

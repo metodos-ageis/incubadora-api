@@ -20,3 +20,25 @@ model users {
   phone      String
   is_active  Boolean
 }
+
+model companies {
+  id               String    @id
+  title            String    @unique
+  description      String
+  sector           String
+  goal             String
+  cnpj             Int?
+  project_time     Int?
+  challenges       String?
+  team_size        Int?
+  project_started  String?
+  website          String?
+  ip               Boolean?  @default(false)
+  resources        String?
+  resources_needed String?
+  mvp              Boolean?  @default(false)
+  incoming_model   String?
+  created_at       DateTime  @default(now())
+  updated_at       DateTime?
+  deleted_at       DateTime?
+}
