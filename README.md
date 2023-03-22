@@ -87,11 +87,12 @@ O link padrão é `localhost:3000/`. Variações para as rotas específicas segu
 
 ## Métodos
 
-Em construção...
-
-## Respostas
-
-Em construção...
+| Método | Descrição |
+|---|---|
+| `Get` | Retorna informação de um ou múltiplos elementos registrados na API. |
+| `Post` | Cria um novo registro. |
+| `Put` | Altera ou Atualiza dados de um registro já existente. |
+| `Delete` | Remove um registro da API. |
 
 ## Parâmetros
 
@@ -127,12 +128,21 @@ Estes são os parâmetros utilizados pela API para manuseio dos dados.
 |---|---|---|
 | `id` | string | Código identificador do usuário no sistema. |
 | `email` | string | Endereço de e-mail do usuário cadastrado no sistema. |
-| `role` | string | |
+| `role` | string | Cargo do usuário. |
 | `name` | string | Nome do usuário referente ao id. |
-| `cpf_cnpj` | string | |
+| `cpf_cnpj` | string | CPF ou CNPJ vinculado ao usuário. |
 | `phone` | string | Número de telefone para contato. |
 | `is_active` | boolean | |
 
 ## Ações
 
-Em construção...
+| Registro | Método | Nome | Descrição |
+|---|---|---||---|
+| company | Get | getCompany | Busca dados de uma empresa. |
+| company | Post | createCompany | Registra uma nova empresa na API. |
+| company | Put | updateCompany | Atualiza dados de uma empresa já registrada. |
+| company | Delete | deleteCompany | Remove uma empresa já registrada do sistema. |
+| user | Get | getUser | Busca dados de um usuário. |
+| user | Post | createUser | Registra um novo usuário na API. |
+| user | Put | updateUser | Atualiza dados de um usuário já registrado. |
+| user | Delete | deleteUser | Remove um usuário já registrado do sistema. |
