@@ -136,13 +136,15 @@ Estes são os parâmetros utilizados pela API para manuseio dos dados.
 
 ## Ações
 
+Estas são as ações implementadas no sistema, utilizando os métodos anteriormente citados.
+
 | Registro | Método | Nome | Descrição |
-|---|---|---||---|
-| company | Get | getCompany | Busca dados de uma empresa. |
-| company | Post | createCompany | Registra uma nova empresa na API. |
-| company | Put | updateCompany | Atualiza dados de uma empresa já registrada. |
-| company | Delete | deleteCompany | Remove uma empresa já registrada do sistema. |
-| user | Get | getUser | Busca dados de um usuário. |
-| user | Post | createUser | Registra um novo usuário na API. |
-| user | Put | updateUser | Atualiza dados de um usuário já registrado. |
-| user | Delete | deleteUser | Remove um usuário já registrado do sistema. |
+|---|---|---|---|
+| company | `Get` | getCompany | Busca dados de uma empresa. |
+| company | `Post` | createCompany | Registra uma nova empresa na API. |
+| company | `Put` | updateCompany | Atualiza dados de uma empresa já registrada. |
+| company | `Delete` | deleteCompany | Remove uma empresa já registrada do sistema. |
+| user | `Get` | getUser | Busca dados de um usuário. |
+| user | `Post` | createUser | Registra um novo usuário na API. |
+| user | `Put` | updateUser | Atualiza dados de um usuário já registrado. |
+| user | `Delete` | deleteUser | Remove um usuário já registrado do sistema. |
