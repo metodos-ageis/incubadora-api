@@ -1,7 +1,13 @@
-import { Controller, Get, Post, Param } from '@nestjs/common';
-import { Body, Delete, Patch } from '@nestjs/common/decorators';
-import { UsersRepository } from 'src/repositories/users/users.repository';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
+import { Body, Delete, Param, Patch } from '@nestjs/common/decorators';
 import { User } from 'src/interfaces/users';
+import { UsersRepository } from 'src/repositories/users/users.repository';
 
 @Controller('user')
 export class UserController {
@@ -13,17 +19,22 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() user: User): Promise<any>{
+  async createUser(@Body() user: User): Promise<any> {
+    if (!user.company_id)
+      throw new HttpException(
+        'ID da empresa não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
     return this.usersRepository.createUser(user);
   }
 
   @Patch()
-  async updateUser(@Body() user: User): Promise<any>{
+  async updateUser(@Body() user: User): Promise<any> {
     return this.usersRepository.updateUser(user);
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<any>{
+  async deleteUser(@Param('id') id: string): Promise<any> {
     return this.usersRepository.deleteUser(id);
   }
 }
