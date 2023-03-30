@@ -5,8 +5,9 @@ import {
   HttpStatus,
   Post,
   Query,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { Body, Delete, Param, Patch } from '@nestjs/common/decorators';
+import { Body, Delete, Param, Patch, Req } from '@nestjs/common/decorators';
 import { User } from 'src/interfaces/users';
 import { UsersRepository } from 'src/repositories/users/users.repository';
 
@@ -20,7 +21,8 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() user: User): Promise<any> {
+  async createUser(@Body() user: User, @Req() req): Promise<User> {
+    if (!req.headers.token) throw new UnauthorizedException();
     if (!user.company_id)
       throw new HttpException(
         'ID da empresa não encontrado.',
@@ -30,12 +32,14 @@ export class UserController {
   }
 
   @Patch()
-  async updateUser(@Body() user: User): Promise<any> {
+  async updateUser(@Body() user: User, @Req() req): Promise<User> {
+    if (!req.headers.token) throw new UnauthorizedException();
     return this.usersRepository.updateUser(user);
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string): Promise<any> {
+  async deleteUser(@Param('id') id: string, @Req() req): Promise<any> {
+    if (!req.headers.token) throw new UnauthorizedException();
     return this.usersRepository.deleteUser(id);
   }
 }

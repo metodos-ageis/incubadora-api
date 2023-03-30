@@ -9,6 +9,8 @@ async function main() {
       id: randomUUID(),
       name: 'Gerente Teste',
       email: 'gerente@gmail.com',
+      company_id: '0',
+      password: '123456',
       role: 'manager',
       cpf_cnpj: '11111111111',
       phone: '81911111111',

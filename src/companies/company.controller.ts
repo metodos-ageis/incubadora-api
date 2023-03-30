@@ -5,8 +5,9 @@ import {
   HttpStatus,
   Param,
   Post,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { Body, Delete, Put } from '@nestjs/common/decorators';
+import { Body, Delete, Put, Req } from '@nestjs/common/decorators';
 import { randomUUID } from 'crypto';
 import { Company } from 'src/interfaces/companies';
 import { CompaniesRepository } from 'src/repositories/companies/companies.repository';
@@ -16,7 +17,8 @@ export class CompaniesController {
   constructor(private readonly companiesRepository: CompaniesRepository) {}
 
   @Get('/:id')
-  async getCompany(@Param('id') id: string): Promise<Company> {
+  async getCompany(@Param('id') id: string, @Req() req): Promise<Company> {
+    if (!req.headers.token) throw new UnauthorizedException();
     if (!id)
       throw new HttpException('ID não encontrado.', HttpStatus.BAD_REQUEST);
     return this.companiesRepository.getCompany(id);
@@ -47,7 +49,8 @@ export class CompaniesController {
   }
 
   @Post()
-  async createCompany(@Body() company: Company): Promise<Company> {
+  async createCompany(@Body() company: Company, @Req() req): Promise<Company> {
+    if (!req.headers.token) throw new UnauthorizedException();
     if (this.bodyValidator(company)) {
       company.id = randomUUID();
       return this.companiesRepository.createCompany(company);
@@ -55,8 +58,9 @@ export class CompaniesController {
   }
 
   @Put()
-  async updateCompany(@Body() company: Company): Promise<Company> {
-    const foundCompany = await this.getCompany(company.id);
+  async updateCompany(@Body() company: Company, @Req() req): Promise<Company> {
+    if (!req.headers.token) throw new UnauthorizedException();
+    const foundCompany = await this.getCompany(company.id, req);
     if (foundCompany) return this.companiesRepository.updateCompany(company);
     else
       throw new HttpException(
@@ -66,8 +70,9 @@ export class CompaniesController {
   }
 
   @Delete(':id')
-  async deleteCompany(@Param('id') id: string): Promise<unknown> {
-    const foundCompany = await this.getCompany(id);
+  async deleteCompany(@Param('id') id: string, @Req() req): Promise<unknown> {
+    if (!req.headers.token) throw new UnauthorizedException();
+    const foundCompany = await this.getCompany(id, req);
     if (foundCompany) return this.companiesRepository.deleteCompany(id);
   }
 }
