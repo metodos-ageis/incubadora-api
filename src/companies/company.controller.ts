@@ -9,12 +9,16 @@ import {
 } from '@nestjs/common';
 import { Body, Delete, Put, Req } from '@nestjs/common/decorators';
 import { randomUUID } from 'crypto';
-import { Company } from 'src/interfaces/companies';
+import { Company, CompanyProgress } from 'src/interfaces/companies';
+import { CompaniesProgressRepository } from 'src/repositories/companies/companies-progress.repository';
 import { CompaniesRepository } from 'src/repositories/companies/companies.repository';
 
 @Controller('company')
 export class CompaniesController {
-  constructor(private readonly companiesRepository: CompaniesRepository) {}
+  constructor(
+    private readonly companiesRepository: CompaniesRepository,
+    private readonly companyProgressRepo: CompaniesProgressRepository,
+  ) {}
 
   @Get('/:id')
   async getCompany(@Param('id') id: string, @Req() req): Promise<Company> {
@@ -22,6 +26,12 @@ export class CompaniesController {
     if (!id)
       throw new HttpException('ID não encontrado.', HttpStatus.BAD_REQUEST);
     return this.companiesRepository.getCompany(id);
+  }
+
+  @Get()
+  async getCompanies(@Req() req): Promise<Company[]> {
+    if (!req.headers.token) throw new UnauthorizedException();
+    return this.companiesRepository.getCompanies();
   }
 
   bodyValidator(body: Company): boolean {
@@ -74,5 +84,37 @@ export class CompaniesController {
     if (!req.headers.token) throw new UnauthorizedException();
     const foundCompany = await this.getCompany(id, req);
     if (foundCompany) return this.companiesRepository.deleteCompany(id);
+  }
+
+  @Get('progress/:id')
+  async getCompanyProgress(
+    @Param('id') companyId: string,
+  ): Promise<CompanyProgress[]> {
+    if (!companyId)
+      throw new HttpException(
+        'ID da empresa não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    return this.companyProgressRepo.getCompanyProgress(companyId);
+  }
+
+  @Post('progress')
+  async createCompanyProgress(
+    @Body() companyProgress: CompanyProgress,
+  ): Promise<CompanyProgress> {
+    companyProgress.id = randomUUID();
+    return this.companyProgressRepo.createCompanyProgress(companyProgress);
+  }
+
+  @Put('progress')
+  async updateCompanyProgress(
+    @Body() companyProgress: CompanyProgress,
+  ): Promise<CompanyProgress> {
+    if (!companyProgress.id)
+      throw new HttpException(
+        'ID do progresso não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    return this.companyProgressRepo.updateCompanyProgress(companyProgress);
   }
 }

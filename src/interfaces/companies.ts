@@ -19,3 +19,23 @@ export interface Company {
   updated_at?: Date;
   deleted_at?: Date;
 }
+
+export interface CompanyProgress {
+  id: string;
+  company_id: string;
+  canvas?: string;
+  pitch?: string;
+  development_state?: string;
+  solution_definition?: string;
+  ecosystem?: string;
+  definition_validation?: string;
+  clients?: string;
+  concurrency_analysis?: string;
+  market_size?: string;
+  incoming_method?: string;
+  mvp?: string;
+  feedback_cycle?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+}

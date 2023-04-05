@@ -15,6 +15,14 @@ export class PrismaCompaniesRepository implements CompaniesRepository {
     });
   }
 
+  async getCompanies(): Promise<Company[]> {
+    return this.prisma.companies.findMany({
+      where: {
+        deleted_at: null,
+      },
+    });
+  }
+
   async createCompany(company: Company): Promise<Company> {
     return this.prisma.companies.create({ data: company });
   }

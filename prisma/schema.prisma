@@ -43,3 +43,23 @@ model companies {
   updated_at       DateTime?
   deleted_at       DateTime?
 }
+
+model companies_progress {
+  id                    String    @id
+  company_id            String
+  canvas                String?
+  pitch                 String?
+  development_state     String?
+  solution_definition   String?
+  ecosystem             String?
+  definition_validation String?
+  clients               String?
+  concurrency_analysis  String?
+  market_size           String?
+  incoming_method       String?
+  mvp                   String?
+  feedback_cycle        String?
+  created_at            DateTime  @default(now())
+  updated_at            DateTime?
+  deleted_at            DateTime?
+}
