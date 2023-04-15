@@ -8,4 +8,5 @@ export abstract class CompaniesProgressRepository {
   abstract updateCompanyProgress(
     companyProgress: CompanyProgress,
   ): Promise<CompanyProgress>;
+  abstract getLastCompanyProgress(id: string): Promise<CompanyProgress>;
 }

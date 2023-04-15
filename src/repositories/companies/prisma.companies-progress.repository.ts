@@ -31,4 +31,14 @@ export class PrismaCompaniesProgressRepository
       data: companyProgress,
     });
   }
+  async getLastCompanyProgress(companyId: string): Promise<CompanyProgress> {
+    return this.prisma.companies_progress.findFirst({
+      where: {
+        company_id: companyId,
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+  }
 }
