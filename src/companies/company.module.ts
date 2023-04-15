@@ -4,6 +4,8 @@ import { CompaniesProgressRepository } from 'src/repositories/companies/companie
 import { CompaniesRepository } from 'src/repositories/companies/companies.repository';
 import { PrismaCompaniesProgressRepository } from 'src/repositories/companies/prisma.companies-progress.repository copy';
 import { PrismaCompaniesRepository } from 'src/repositories/companies/prisma.companies.repository';
+import { PrismaTopicsScoresRepository } from 'src/repositories/companies/prisma.topics-scores.repository';
+import { TopicsScoresRepository } from 'src/repositories/companies/topics-scores.repository';
 import { CompaniesController } from './company.controller';
 
 @Module({
@@ -17,6 +19,10 @@ import { CompaniesController } from './company.controller';
     {
       provide: CompaniesProgressRepository,
       useClass: PrismaCompaniesProgressRepository,
+    },
+    {
+      provide: TopicsScoresRepository,
+      useClass: PrismaTopicsScoresRepository,
     },
   ],
 })

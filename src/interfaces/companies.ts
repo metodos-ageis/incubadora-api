@@ -39,3 +39,14 @@ export interface CompanyProgress {
   updated_at?: Date;
   deleted_at?: Date;
 }
+
+export interface TopicScore {
+  id: string;
+  progress_id: string;
+  topic: string;
+  score: number;
+  group: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+}

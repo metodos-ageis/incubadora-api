@@ -9,15 +9,17 @@ import {
 } from '@nestjs/common';
 import { Body, Delete, Put, Req } from '@nestjs/common/decorators';
 import { randomUUID } from 'crypto';
-import { Company, CompanyProgress } from 'src/interfaces/companies';
+import { Company, CompanyProgress, TopicScore } from 'src/interfaces/companies';
 import { CompaniesProgressRepository } from 'src/repositories/companies/companies-progress.repository';
 import { CompaniesRepository } from 'src/repositories/companies/companies.repository';
+import { TopicsScoresRepository } from 'src/repositories/companies/topics-scores.repository';
 
 @Controller('company')
 export class CompaniesController {
   constructor(
     private readonly companiesRepository: CompaniesRepository,
     private readonly companyProgressRepo: CompaniesProgressRepository,
+    private readonly topicsScoresRepo: TopicsScoresRepository,
   ) {}
 
   @Get('/:id')
@@ -116,5 +118,41 @@ export class CompaniesController {
         HttpStatus.BAD_REQUEST,
       );
     return this.companyProgressRepo.updateCompanyProgress(companyProgress);
+  }
+
+  @Get('topics/:id')
+  async getTopicsScoresByProgress(
+    @Param('id') progressId: string,
+  ): Promise<TopicScore[]> {
+    if (!progressId)
+      throw new HttpException(
+        'ID do progresso não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    return this.topicsScoresRepo.getTopicsByProgress(progressId);
+  }
+
+  @Post('topics')
+  async createTopicScore(
+    @Body() topicScore: TopicScore,
+    @Req() req,
+  ): Promise<TopicScore> {
+    if (!req.headers.token) throw new UnauthorizedException();
+    topicScore.id = randomUUID();
+    return this.topicsScoresRepo.createTopic(topicScore);
+  }
+
+  @Put('topics')
+  async updateTopicScore(
+    @Body() topicScore: TopicScore,
+    @Req() req,
+  ): Promise<TopicScore> {
+    if (!req.headers.token) throw new UnauthorizedException();
+    if (!topicScore.id)
+      throw new HttpException(
+        'ID do topico não encontrado.',
+        HttpStatus.BAD_REQUEST,
+      );
+    return this.topicsScoresRepo.updateTopic(topicScore);
   }
 }
