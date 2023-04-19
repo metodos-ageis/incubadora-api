@@ -28,7 +28,7 @@ model companies {
   description      String
   sector           String
   goal             String
-  cnpj             String?
+  cnpj             Int?
   project_time     Int?
   challenges       String?
   team_size        Int?
