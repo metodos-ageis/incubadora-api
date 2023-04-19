@@ -108,12 +108,7 @@ export class PrismaCompaniesRepository implements CompaniesRepository {
     };
   }
 
-  async getCompanyMetrics(id: string): Promise<CompanyMetrics> {
-    const progress = await this.prisma.companies_progress.findMany({
-      where: { company_id: id },
-      orderBy: { created_at: 'desc' },
-    });
-
+  getMetrics(progress: CompanyProgress[]) {
     const structure = this.getMetricsGroup(progress, [
       ['canvas', 'canvas_score'],
       ['pitch', 'pitch_score'],
@@ -142,5 +137,35 @@ export class PrismaCompaniesRepository implements CompaniesRepository {
       solution,
       structure,
     };
+  }
+
+  async getCompanyMetrics(id: string): Promise<CompanyMetrics> {
+    const progress = await this.prisma.companies_progress.findMany({
+      where: { company_id: id },
+      orderBy: { created_at: 'desc' },
+    });
+
+    return this.getMetrics(progress);
+  }
+
+  async getCompanyMetricsFromProgress(
+    companyId: string,
+    progressId: string,
+  ): Promise<CompanyMetrics> {
+    const progress = await this.prisma.companies_progress.findMany({
+      where: { company_id: companyId },
+      orderBy: { created_at: 'desc' },
+    });
+
+    let filteredProgress: CompanyProgress[] = [];
+    for (let i = progress.length - 1; i >= 0; i--) {
+      const p = progress[i];
+      filteredProgress.unshift(p);
+      if (p.id === progressId) {
+        break;
+      }
+    }
+
+    return this.getMetrics(filteredProgress);
   }
 }

@@ -9,11 +9,12 @@ export class PrismaCompaniesProgressRepository
 {
   constructor(private prisma: PrismaService) {}
 
-  async getCompanyProgress(companyId: string): Promise<CompanyProgress[]> {
-    return this.prisma.companies_progress.findMany({
-      where: {
-        company_id: companyId,
-      },
+  async getCompanyProgress(
+    companyId: string,
+    progressId: string,
+  ): Promise<CompanyProgress> {
+    return this.prisma.companies_progress.findUniqueOrThrow({
+      where: { id: progressId },
     });
   }
   async createCompanyProgress(
