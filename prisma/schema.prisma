@@ -90,14 +90,3 @@ model topics_scores {
   updated_at  DateTime?
   deleted_at  DateTime?
 }
-
-model topics_scores {
-  id          String    @id
-  topic       String
-  progress_id String
-  score       Int
-  group       String
-  created_at  DateTime  @default(now())
-  updated_at  DateTime?
-  deleted_at  DateTime?
-}

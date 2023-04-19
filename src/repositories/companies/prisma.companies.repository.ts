@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { CompanyMetrics, CompanyMetricsGroup } from 'src/dto/metrics';
 import { Company, CompanyProgress } from 'src/interfaces/companies';
+import { KeysOfType } from 'src/types';
 import { PrismaService } from '../../database/prisma.service';
 import { CompaniesRepository } from './companies.repository';
-import { CompanyMetrics, CompanyMetricsGroup } from 'src/dto/metrics';
-import { KeysOfType } from 'src/types';
 
 @Injectable()
 export class PrismaCompaniesRepository implements CompaniesRepository {
