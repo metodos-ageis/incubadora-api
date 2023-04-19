@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import { CompaniesController } from 'src/companies/company.controller';
 import { CompaniesProgressRepository } from 'src/repositories/companies/companies-progress.repository';
 import { CompaniesRepository } from 'src/repositories/companies/companies.repository';
-import { PrismaCompaniesProgressRepository } from 'src/repositories/companies/prisma.companies-progress.repository copy';
+import { PrismaCompaniesProgressRepository } from 'src/repositories/companies/prisma.companies-progress.repository';
 import { PrismaCompaniesRepository } from 'src/repositories/companies/prisma.companies.repository';
 import * as request from 'supertest';
 import { AuthController } from '../src/auth/auth.controller';

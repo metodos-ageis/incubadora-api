@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { Body, Delete, Put, Req } from '@nestjs/common/decorators';
 import { randomUUID } from 'crypto';
+import { CompanyMetrics } from 'src/dto/metrics';
 import { Company, CompanyProgress, TopicScore } from 'src/interfaces/companies';
 import { CompaniesProgressRepository } from 'src/repositories/companies/companies-progress.repository';
 import { CompaniesRepository } from 'src/repositories/companies/companies.repository';
@@ -88,16 +89,53 @@ export class CompaniesController {
     if (foundCompany) return this.companiesRepository.deleteCompany(id);
   }
 
-  @Get('progress/:id')
-  async getCompanyProgress(
+  @Get(':id/metrics')
+  async getCompanyMetrics(
+    @Param('id') id: string,
+    @Req() req,
+  ): Promise<unknown> {
+    if (!req.headers.token) throw new UnauthorizedException();
+    if (!id)
+      throw new HttpException('ID não encontrado.', HttpStatus.BAD_REQUEST);
+    return this.companiesRepository.getCompanyMetrics(id);
+  }
+
+  @Get(':id/progress/:progressId/metrics')
+  async getCompanyProgressMetrics(
     @Param('id') companyId: string,
-  ): Promise<CompanyProgress[]> {
+    @Param('progressId') progressId: string,
+  ): Promise<CompanyMetrics> {
     if (!companyId)
       throw new HttpException(
         'ID da empresa não encontrado.',
         HttpStatus.BAD_REQUEST,
       );
-    return this.companyProgressRepo.getCompanyProgress(companyId);
+    return this.companiesRepository.getCompanyMetricsFromProgress(
+      companyId,
+      progressId,
+    );
+  }
+
+  @Get(':id/progress/last')
+  async getLastCompanyProgress(
+    @Param('id') companyId: string,
+  ): Promise<CompanyProgress> {
+    const data = await this.companyProgressRepo.getLastCompanyProgress(
+      companyId,
+    );
+    return data;
+  }
+
+  @Get(':id/progress/:progressId')
+  async getCompanyProgress(
+    @Param('id') companyId: string,
+    @Param('progressId') progressId: string,
+  ): Promise<CompanyProgress> {
+    const data = await this.companyProgressRepo.getCompanyProgress(
+      companyId,
+      progressId,
+    );
+    return data;
   }
 
   @Post('progress')

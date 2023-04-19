@@ -28,7 +28,7 @@ model companies {
   description      String
   sector           String
   goal             String
-  cnpj             Int?
+  cnpj             String?
   project_time     Int?
   challenges       String?
   team_size        Int?
@@ -45,23 +45,39 @@ model companies {
 }
 
 model companies_progress {
-  id                    String    @id
-  company_id            String
-  canvas                String?
-  pitch                 String?
-  development_state     String?
-  solution_definition   String?
-  ecosystem             String?
-  definition_validation String?
-  clients               String?
-  concurrency_analysis  String?
-  market_size           String?
-  incoming_method       String?
-  mvp                   String?
-  feedback_cycle        String?
-  created_at            DateTime  @default(now())
-  updated_at            DateTime?
-  deleted_at            DateTime?
+  id                          String    @id
+  company_id                  String
+  canvas                      String?
+  canvas_score                Int?
+  pitch                       String?
+  pitch_score                 Int?
+  ip                          String?
+  ip_score                    Int?
+  development_state           String?
+  development_state_score     Int?
+  solution_definition         String?
+  solution_definition_score   Int?
+  needed_resources            String?
+  needed_resources_score      Int?
+  ecosystem                   String?
+  ecosystem_score             Int?
+  definition_validation       String?
+  definition_validation_score Int?
+  clients                     String?
+  clients_score               Int?
+  concurrency_analysis        String?
+  concurrency_analysis_score  Int?
+  market_size                 String?
+  market_size_score           Int?
+  incoming_method             String?
+  incoming_method_score       Int?
+  mvp                         String?
+  mvp_score                   Int?
+  feedback_cycle              String?
+  feedback_cycle_score        Int?
+  created_at                  DateTime  @default(now())
+  updated_at                  DateTime?
+  deleted_at                  DateTime?
 }
 
 model topics_scores {
