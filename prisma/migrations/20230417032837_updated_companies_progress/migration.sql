@@ -26,7 +26,7 @@ CREATE TABLE "new_companies" (
     "description" TEXT NOT NULL,
     "sector" TEXT NOT NULL,
     "goal" TEXT NOT NULL,
-    "cnpj" TEXT,
+    "cnpj" INTEGER,
     "project_time" INTEGER,
     "challenges" TEXT,
     "team_size" INTEGER,
